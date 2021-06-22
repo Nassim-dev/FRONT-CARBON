@@ -254,4 +254,86 @@ let Gauge = function () {
 let gauge = new Gauge()
 gauge.update(80)
 
-export { gauge }
+export {
+  gauge
+}
+
+// Graph IV : Comparator
+const data = [
+	{
+	  person: 'MOI',
+	  value: 20,
+	  color: "red"
+	},
+	{
+	  person: 'ELON',
+	  value: 35,
+	  color: '#00a2ee'
+	},
+
+	{
+	  person: 'Person 1',
+	  value: 40,
+	  color: '#007bc8'
+	},
+	{
+	  person: 'Person 2',
+	  value: 15,
+	  color: '#65cedb'
+	},
+	{
+		person: 'Person 3',
+		value: 30,
+		color: '#65cedb'
+	  }
+];
+
+const svg = d3.select('.dashboard__comparator')
+              .append("svg")
+
+const margin = 40;
+const width = 1100 - 2 * margin;
+const height = 430 - 2 * margin;
+
+const chart = svg.append('g')
+          .attr('transform', `translate(${margin}, ${margin})`);
+
+const xScale = d3.scaleBand()
+          .range([0, width])
+          .domain(data.map((s) => s.person))
+          .padding(0.5)
+
+const yScale = d3.scaleLinear()
+				.range([height, 0])
+				.domain([0, 50])
+
+const makeYLines = () => d3.axisLeft()
+                          .scale(yScale)
+
+chart.append('g')
+    .attr('transform', `translate(0, ${height})`)
+    .call(d3.axisBottom(xScale));
+
+chart.append('g')
+    .call(d3.axisLeft(yScale));
+
+chart.append('g')
+    .attr('class', 'grid')
+    .call(makeYLines()
+    .tickSize(-width, 0, 0)
+    .tickFormat(''));
+
+
+const barGroups = chart.selectAll()
+                .data(data)
+                .enter()
+                .append('g')
+
+barGroups.append('rect')
+    .attr('class', 'bar')
+    .attr('x', (g) => xScale(g.person))
+    .attr('y', (g) => yScale(g.value))
+    .attr('height', (g) => height - yScale(g.value))
+    .attr('width', xScale.bandwidth())
+      .attr('rx',10)
+

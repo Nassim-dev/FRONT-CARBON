@@ -81,6 +81,27 @@ h4, .headline-h4 {
   }
 }
 
+.content-container{
+  @include min(sm){
+    width: auto;
+    margin: auto;
+  }
 
+  @include max(sm){
+    width: auto;
+    margin: auto;
+  }
+}
 
+.full-content{
+  @include min(sm){
+    width: auto;
+    margin: auto;
+  }
+
+  @include max(sm){
+    width: auto;
+    margin: auto;
+  }
+}
 
