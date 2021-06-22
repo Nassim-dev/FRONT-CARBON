@@ -19,3 +19,14 @@ mixin card(card)
       h4.card__title= card.title
 
     p.text-regular.card__body(itemprop="description")= card.description || 'Lorem ipsum sit amet, consectetur adipiscing elit maecenas nibh.'
+
+mixin text-result(score)
+  - var s = 50-score
+  #s
+    if s > 0
+      h3 Oh no! It seems you have a really <span style="color:#ea7575">bad</span> carbon emission.
+    else if (s >= -10 && s <= 10)
+      h3 You're in the norm! You have an <span style="color:#EABB75">average</span> carbon emission.
+    else
+      h3 Congratulation! You have a <span style="color:#3EC865">good</span> carbon emission.
+    h4!= `According to our statistics you're emitting <span style="background-color:${s<0?'#3EC865':s>0?'#ea7575':'#EABB75'}">${s<0?s*-1+'%':s>0?s+'%':''}</span> ${s<0?'less':s>0?'more':'the same'} than the average user.`
